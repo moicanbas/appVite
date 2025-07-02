@@ -1,5 +1,11 @@
 export const auth = {
-  isAuthenticated: () => !!localStorage.getItem("token"),
-  login: () => localStorage.setItem("token", "12345-abcd-xyz"), //hashear o encriptar el token
-  logout: () => localStorage.removeItem("token") 
+    isAuthenticated: () => !!localStorage.getItem("token"),
+    login: (token, usuario) => {
+        localStorage.setItem("token", token)
+        localStorage.setItem("user", JSON.stringify(usuario))
+    }, //hashear o encriptar el token
+    logout: () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user")
+    }
 };
