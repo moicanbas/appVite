@@ -3,7 +3,7 @@ import { auth } from './auth.js';
 
 window.handleLogin = () => {
   auth.login();
-  location.hash = "/dashboard";
+  location.hash = "/";
 };
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
@@ -11,5 +11,17 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   location.hash = "/login";
 });
 
-window.addEventListener("load", renderRoute);
+window.addEventListener("load", () => {
+  localStorage.setItem("usuarios", JSON.stringify(
+    [{
+      "username": "juancho.rois",
+      "name": "Juancho",
+      "lastname": "Rois",
+      "password": "12345",
+      "role": "admin"
+    }]
+  )
+  )
+  renderRoute()
+});
 window.addEventListener("hashchange", renderRoute);
