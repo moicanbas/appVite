@@ -22,6 +22,33 @@ window.addEventListener("load", () => {
     }]
   )
   )
+  localStorage.setItem("tareas", JSON.stringify(
+    [
+      {
+        "id": 1,
+        "titulo": "programar",
+        "estado": "por hacer",
+        "responsable": "Fabian",
+        "descripcion": "Programar una SPA",
+      },
+      {
+        "id": 2,
+        "titulo": "cocinar",
+        "estado": "en progreso",
+        "responsable": "Yoelmis",
+        "descripcion": "Preparar el desayuno",
+      },
+      {
+        "id": 3,
+        "titulo": "dormir",
+        "estado": "hecho",
+        "responsable": "Walter",
+        "descripcion": "Dormir 8 horas",
+      }
+    ])
+  )
   renderRoute()
 });
+
+
 window.addEventListener("hashchange", renderRoute);

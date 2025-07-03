@@ -1,12 +1,15 @@
 import { auth } from './auth.js';
+import { editTask } from './controllers/crudFunctions.js';
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios"))
 let userLoggeado = JSON.parse(localStorage.getItem("user"))
+let tasks = JSON.parse(localStorage.getItem("tareas"))
 
 const routes = {
     "/": "/src/views/home.html",
     "/login": "/src/views/login.html",
     "/register": "/src/views/register.html",
+    "/task": "/src/views/task.html",
 };
 
 export async function renderRoute() {
@@ -97,7 +100,36 @@ export async function renderRoute() {
         if (path === "/") {
             if (userLoggeado.role === "admin") {
                 document.getElementById("create-tasks").hidden = false
+
+                const tbody = document.querySelector("#tasks-table tbody");
+                tbody.innerHTML = "";
+
+                tasks.forEach(task => {
+                    const fila = document.createElement("tr");
+
+                    fila.innerHTML = `
+                            <td>${task.id}</td>
+                            <td>${task.titulo}</td>
+                            <td>${task.estado}</td>
+                            <td>${task.responsable}</td>
+                            <td>${task.descripcion}</td>
+                            <td>
+                                <button class="btn-editar" data-id="${task.id}">Editar</button>
+                                <button onclick="eliminarUsuario(${task.id})">Eliminar</button>
+                            </td>
+                        `;
+
+                    tbody.appendChild(fila);
+                });
+                
+                tbody.querySelectorAll('.btn-editar').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        editTask(id);
+                    });
+                });
             }
+
         }
     } catch (err) {
         app.innerHTML = "<h2>Error al cargar la vista</h2>";
